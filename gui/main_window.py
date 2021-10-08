@@ -2,10 +2,10 @@
 # author: Tac
 # contact: gzzhanghuaxiong@corp.netease.com
 
-from PyQt6.QtWidgets import QMainWindow, QHBoxLayout, QWidget
+from PyQt6.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QDockWidget
+from PyQt6.QtCore import Qt
 
 from .output_window import OutputWindow
-import py_chakura
 
 main_window = None  # MainWindow的实例
 
@@ -22,7 +22,8 @@ class MainWindow(QMainWindow):
             parent: 父Widget
         """
         super(MainWindow, self).__init__(parent)
-        self.output_window = OutputWindow(self)
+        self.console = QDockWidget('Console', self)
+        self.console_window = OutputWindow(self.console)
 
         self._setup_ui()
         global main_window
@@ -39,9 +40,14 @@ class MainWindow(QMainWindow):
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        layout.addWidget(self.output_window)
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+        self.console.setWidget(self.console_window)
+        self.console.setObjectName('console')
+        self.console.setAllowedAreas(Qt.DockWidgetArea.NoDockWidgetArea)
+        self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.console)
+        self.console.setFloating(True)
+        self.console.resize(800, 400)
 
     def on_window_ready(self):
         """
@@ -51,5 +57,23 @@ class MainWindow(QMainWindow):
         """
         from log_manager import OutputWindowHandler
         OutputWindowHandler.main_window_ready = True
-        py_chakura.logger.info(self.tr('第一步：选择需要导表的Excel'))
-        py_chakura.logger.info(self.tr('第二步：点击导表按钮，开始导表'))
+
+    def toggle_console(self):
+        """
+        toggle console界面
+        Returns:
+            None
+        """
+        self.console.setVisible(not self.console.isVisible())
+
+    def keyPressEvent(self, event):
+        """
+        监听按键事件
+        Args:
+            event: QtGui.QKeyEvent
+        Returns:
+            None
+        """
+        if event.key() == Qt.Key.Key_QuoteLeft:
+            self.toggle_console()
+        super(MainWindow, self).keyPressEvent(event)

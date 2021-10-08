@@ -221,11 +221,11 @@ class OutputWindowHandler(logging.Handler):
             try:
                 import gui.main_window
                 if record.levelno >= logging.ERROR:
-                    gui.main_window.main_window.output_window.show_error_message(message)
+                    gui.main_window.main_window.console_window.show_error_message(message)
                 elif record.levelno == logging.WARNING:
-                    gui.main_window.main_window.output_window.show_warning_message(message)
+                    gui.main_window.main_window.console_window.show_warning_message(message)
                 else:
-                    gui.main_window.main_window.output_window.show_normal_message(message)
+                    gui.main_window.main_window.console_window.show_normal_message(message)
             except Exception:
                 import traceback
                 message = 'OutputWindow Exception:\n%s\nOriginal message: %s\n' % (traceback.format_exc(), message)
@@ -298,9 +298,9 @@ class MockStdOut(object):
             import gui.main_window
             if gui.main_window.main_window:
                 if self.channel == 'stdout':
-                    gui.main_window.main_window.output_window.show_normal_message(self._buffer)
+                    gui.main_window.main_window.console_window.show_normal_message(self._buffer)
                 else:
-                    gui.main_window.main_window.output_window.show_error_message(self._buffer)
+                    gui.main_window.main_window.console_window.show_error_message(self._buffer)
             self._buffer = ''
 
 
