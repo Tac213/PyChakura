@@ -37,7 +37,7 @@ def exec_python_script(script_name, script_args, thread_name):
     py_chakura.logger.info('Start to execute python script: \'%s\', cwd=\'%s\'', script_name, cwd)
     output_window = main_window.main_window.create_python_output_window()
     sys.stdout = MockStdOut('stdout', sys.__stdout__, output_window)
-    sys.stderr = MockStdOut('stdout', sys.__stderr__, output_window)
+    sys.stderr = MockStdOut('stderr', sys.__stderr__, output_window)
     thread = None
     if hasattr(module, 'main'):
         if not callable(module.main):
