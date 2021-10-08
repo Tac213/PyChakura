@@ -2,9 +2,13 @@
 # author: Tac
 # contact: gzzhanghuaxiong@corp.netease.com
 
+import os.path
+
 from PyQt6.QtWidgets import QLineEdit, QToolButton, QStyleOptionFrame, QStyle
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt, QRect
+
+import const
 
 
 class SearchLineEdit(QLineEdit):
@@ -20,13 +24,13 @@ class SearchLineEdit(QLineEdit):
         """
         super(SearchLineEdit, self).__init__(parent)
         self.search_button = QToolButton(self)
-        self.search_button.setIcon(QIcon('res/svg/search.svg'))
+        self.search_button.setIcon(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/search.svg')))
         self.search_button.setCursor(Qt.CursorShape.ArrowCursor)
         self.search_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         self.search_button.setAutoRaise(True)
 
         self.clear_button = QToolButton(self)
-        self.clear_button.setIcon(QIcon('res/svg/clear.svg'))
+        self.clear_button.setIcon(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/clear.svg')))
         self.clear_button.setCursor(Qt.CursorShape.ArrowCursor)
         self.clear_button.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
         self.clear_button.setAutoRaise(True)

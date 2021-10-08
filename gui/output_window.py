@@ -2,6 +2,7 @@
 # author: Tac
 # contact: gzzhanghuaxiong@corp.netease.com
 
+import os.path
 import code
 
 from PyQt6.QtWidgets import QFrame, QToolButton, QToolBar, QVBoxLayout, QWidgetAction, QCheckBox, QMenu
@@ -11,6 +12,7 @@ from PyQt6.QtCore import Qt
 from .find_widget import FindWidget
 from .output_text_widget import OutputTextWidget, MessageType
 from .history_rollback_line_edit import HistoryRollbackLineEdit
+import const
 
 
 class OutputWindow(QFrame):
@@ -40,14 +42,14 @@ class OutputWindow(QFrame):
         self.find_widget = FindWidget(self)
 
         self.prev_button = QToolButton(self)
-        self.prev_button.setIcon(QIcon('res/svg/dropup.svg'))
+        self.prev_button.setIcon(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/dropup.svg')))
         self.prev_button.setToolTip(self.tr('上一个匹配项'))
         self.prev_button.setFixedSize(16, 16)
         self.prev_button.setAutoRaise(True)
         self.prev_button.clicked.connect(self.find_widget.on_prev)
 
         self.next_button = QToolButton(self)
-        self.next_button.setIcon(QIcon('res/svg/dropdown.svg'))
+        self.next_button.setIcon(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/dropdown.svg')))
         self.next_button.setToolTip(self.tr('下一个匹配项'))
         self.next_button.setFixedSize(16, 16)
         self.next_button.setAutoRaise(True)
@@ -83,15 +85,16 @@ class OutputWindow(QFrame):
         Returns:
             None
         """
-        self.clear_action = QAction(QIcon('res/svg/clear.svg'), self.tr('清除'), self)
+        self.clear_action = QAction(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/clear.svg')), self.tr('清除'), self)
         self.clear_action.setToolTip(self.tr('清空输出窗口信息'))
         self.clear_action.triggered.connect(self._on_clear)
 
-        self.show_menu_action = QAction(QIcon('res/svg/menu.svg'), self.tr('输出类型菜单'), self)
+        self.show_menu_action = QAction(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/menu.svg')),
+                                        self.tr('输出类型菜单'), self)
         self.show_menu_action.setToolTip(self.tr('显示输出类型菜单'))
         self.show_menu_action.triggered.connect(self._on_show_message_menu)
 
-        self.search_action = QAction(QIcon('res/svg/search.svg'), self.tr('搜索'), self)
+        self.search_action = QAction(QIcon(os.path.join(const.ROOT_DIR, 'res/svg/search.svg')), self.tr('搜索'), self)
         self.search_action.setToolTip(self.tr('在输出窗口中搜索'))
         self.search_action.triggered.connect(self._on_search)
 

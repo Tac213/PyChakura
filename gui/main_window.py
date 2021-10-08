@@ -41,6 +41,7 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         central_widget.setLayout(layout)
+        self.layout = layout
         self.setCentralWidget(central_widget)
         self.console.setWidget(self.console_window)
         self.console.setObjectName('console')
@@ -48,6 +49,7 @@ class MainWindow(QMainWindow):
         self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.console)
         self.console.setFloating(True)
         self.console.resize(800, 400)
+        self.console.setVisible(False)  # 默认隐藏console
 
     def on_window_ready(self):
         """
@@ -77,3 +79,13 @@ class MainWindow(QMainWindow):
         if event.key() == Qt.Key.Key_QuoteLeft:
             self.toggle_console()
         super(MainWindow, self).keyPressEvent(event)
+
+    def create_python_output_window(self):
+        """
+        创建显示python日志的窗口
+        Returns:
+            OutputWindow的实例
+        """
+        self.output_window = OutputWindow(self)
+        self.layout.addWidget(self.output_window)
+        return self.output_window

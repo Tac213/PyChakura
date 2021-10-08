@@ -261,15 +261,17 @@ class MockStdOut(object):
     Mock stdout和stderr
     """
 
-    def __init__(self, channel, origin):
+    def __init__(self, channel, origin, output_window=None):
         """
         构造器
         Args:
             channel: [str]'stdout'或者'stderr'
             origin: sys.stdout或sys.stderr
+            output_window: 指定输出窗口
         """
         self.channel = channel
         self.origin = origin
+        self.output_window = output_window
         self._buffer = ''
 
     def __getattr__(self, attr_name):
@@ -295,14 +297,20 @@ class MockStdOut(object):
         self._buffer += text
         if self._buffer.endswith('\n'):
             self._buffer = self._buffer.rstrip('\n')
-            import gui.main_window
-            if gui.main_window.main_window:
+            if not self.output_window:
+                import gui.main_window
+                if gui.main_window.main_window:
+                    if self.channel == 'stdout':
+                        gui.main_window.main_window.console_window.show_normal_message(self._buffer)
+                    else:
+                        gui.main_window.main_window.console_window.show_error_message(self._buffer)
+            else:
                 if self.channel == 'stdout':
-                    gui.main_window.main_window.console_window.show_normal_message(self._buffer)
+                    self.output_window.show_normal_message(self._buffer)
                 else:
-                    gui.main_window.main_window.console_window.show_error_message(self._buffer)
+                    self.output_window.show_error_message(self._buffer)
             self._buffer = ''
 
 
-sys.stdout = MockStdOut('stdout', sys.stdout)
-sys.stderr = MockStdOut('stderr', sys.stderr)
+sys.stdout = MockStdOut('stdout', sys.__stdout__)
+sys.stderr = MockStdOut('stderr', sys.__stderr__)
