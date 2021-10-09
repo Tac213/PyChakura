@@ -5,7 +5,7 @@
 - 关键字搜索、高亮；
 - 可以输入python脚本与python解释器进行交互，便于debug；
 
-如果你要执行python2.7的脚本，请使用[PyChakura2.7](https://github.com/Tac213/PyChakura27) 。
+如果你要执行python2.7的脚本，请使用[PyChakura2.7](https://github.com/Tac213/PyChakura2.7) 。
 
 ## 使用方法
 
