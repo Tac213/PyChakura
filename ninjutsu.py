@@ -25,6 +25,15 @@ def exec_python_script(script_name, script_args, thread_name):
     if not script_name:
         return
     cwd = os.getcwd()
+    full_path = script_name
+    if not os.path.isabs(full_path):
+        full_path = os.path.join(cwd, full_path)
+    if full_path == os.path.splitext(full_path)[0]:
+        full_path = os.extsep.join((full_path, 'py'))
+    sys_argv = [full_path]
+    if script_args:
+        sys_argv.extend(script_args.split(' '))
+    sys.argv = sys_argv
     sys.path.insert(0, cwd)
     script_name = os.path.splitext(script_name)[0]
     try:
@@ -45,7 +54,7 @@ def exec_python_script(script_name, script_args, thread_name):
             main_window.main_window.toggle_console()
             return
         try:
-            thread = threading.Thread(target=module.main, name=thread_name, args=(script_args, ))
+            thread = threading.Thread(target=module.main, name=thread_name)
             thread.start()
         except TypeError:
             py_chakura.logger.log_last_except()
