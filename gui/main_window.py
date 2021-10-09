@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         Returns:
             None
         """
-        self.resize(800, 400)
+        self.resize(960, 480)
         central_widget = QWidget(self)
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
