@@ -32,7 +32,7 @@ def exec_python_script(script_name, script_args, thread_name):
         full_path = os.extsep.join((full_path, 'py'))
     sys_argv = [full_path]
     if script_args:
-        sys_argv.extend(script_args.split(' '))
+        sys_argv.extend(script_args.split())
     sys.argv = sys_argv
     sys.path.insert(0, cwd)
     script_name = os.path.splitext(script_name)[0]
