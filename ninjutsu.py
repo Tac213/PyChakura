@@ -17,7 +17,7 @@ def exec_python_script(script_name, script_args, thread_name):
     开启另一个线程执行python脚本
     Args:
         script_name: [str]脚本名字, 比如'test.py', 也可以没有'.py'后缀
-        script_args: [str]脚本参数，比如'-a 123 -b 456, 789'
+        script_args: [str]脚本参数，比如'-a 123 -b 456 789'
         thread_name: [str]脚本执行现成名字，通常取调用者传的参数
     Returns:
         threading.Thread
