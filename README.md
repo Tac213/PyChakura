@@ -33,7 +33,7 @@ def main():
 接着，在你的**脚本工作目录**执行一下命令即可：
 
 ```
-py -3 %PY_CHAKURA_DIR%/py_chakura.py -m %LAUNCH_SCRIPT_DIR%/launch.py -p "-a 123 -b 456 789", --window_name Customize
+py -3 %PY_CHAKURA_DIR%/py_chakura.py -m %LAUNCH_SCRIPT_DIR%/launch.py -p "-a 123 -b 456 789" --window_name Customize
 ```
 
 参数解释：
