@@ -58,6 +58,7 @@ def main(args):
     """
     from PyQt6.QtWidgets import QApplication
     from PyQt6.QtGui import QIcon
+    from PyQt6.QtCore import QDir
     from gui.main_window import MainWindow
 
     app = QApplication(sys.argv)
@@ -67,7 +68,8 @@ def main(args):
     app.setApplicationName(app_name)
     app.setApplicationDisplayName(app_name)
     app.setDesktopFileName(app_name)
-    app.setWindowIcon(QIcon(os.path.join(const.ROOT_DIR, const.APP_ICON)))
+    QDir.setSearchPaths(const.RES_DIR, [os.path.normpath(os.path.join(const.ROOT_DIR, const.RES_DIR))])
+    app.setWindowIcon(QIcon(const.APP_ICON))
 
     # 显示主窗口, 如果不用一个变量勾住这个窗口的实例，这个窗口将无法被显示出来，即使在类里面写self.show()也没用
     main_window = MainWindow()

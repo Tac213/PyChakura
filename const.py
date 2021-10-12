@@ -5,9 +5,10 @@
 import os
 
 ROOT_DIR = os.path.dirname(__file__)
+RES_DIR = 'res'
 
 APP_NAME = 'PyChakura'
-APP_ICON = 'res/icon.jpg'
+APP_ICON = 'res:icon.jpg'
 
 LOGGER_NAME = 'py_chakura'
 LOG_DIR_NAME = 'log'
