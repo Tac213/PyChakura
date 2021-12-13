@@ -28,6 +28,8 @@ def exec_python_script(script_name, script_args, thread_name):
     full_path = script_name
     if not os.path.isabs(full_path):
         full_path = os.path.join(cwd, full_path)
+    else:
+        script_name = os.path.basename(script_name)
     if full_path == os.path.splitext(full_path)[0]:
         full_path = os.extsep.join((full_path, 'py'))
     sys_argv = [full_path]
@@ -38,7 +40,7 @@ def exec_python_script(script_name, script_args, thread_name):
     script_name = os.path.splitext(script_name)[0]
     try:
         module = importlib.import_module(script_name)
-    except ImportError:
+    except (ImportError, ModuleNotFoundError):
         py_chakura.logger.error('Cannot import \'%s\', cwd=\'%s\'', script_name, cwd)
         py_chakura.logger.log_last_except()
         main_window.main_window.toggle_console()
