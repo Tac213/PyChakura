@@ -28,15 +28,14 @@ def exec_python_script(script_name, script_args, thread_name):
     full_path = script_name
     if not os.path.isabs(full_path):
         full_path = os.path.join(cwd, full_path)
-    else:
-        script_name = os.path.basename(script_name)
+    script_name = os.path.basename(script_name)
     if full_path == os.path.splitext(full_path)[0]:
         full_path = os.extsep.join((full_path, 'py'))
     sys_argv = [full_path]
     if script_args:
         sys_argv.extend(script_args.split())
     sys.argv = sys_argv
-    sys.path.insert(0, cwd)
+    sys.path.insert(0, os.path.dirname(full_path))
     script_name = os.path.splitext(script_name)[0]
     try:
         module = importlib.import_module(script_name)
